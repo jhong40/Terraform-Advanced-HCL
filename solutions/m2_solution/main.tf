@@ -124,7 +124,7 @@ data "aws_ssm_parameter" "amazon_linux_2_ami" {
 
 resource "aws_instance" "web" {
   ami                    = data.aws_ssm_parameter.amazon_linux_2_ami.value
-  instance_type          = var.environment == "production" ? "t3.small" : "t3.micro"
+  instance_type          = var.environment == "production" ? "t3.small" : "t3.micro"    ####
   subnet_id              = aws_subnet.public_1.id
   vpc_security_group_ids = [aws_security_group.web.id]
   monitoring             = var.environment == "production" ? true : false
