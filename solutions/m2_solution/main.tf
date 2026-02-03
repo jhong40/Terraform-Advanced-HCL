@@ -101,7 +101,7 @@ resource "aws_security_group" "web" {
 
   ingress {
     protocol    = "tcp"
-    from_port   = var.environment == "production" ? 8080 : 80
+    from_port   = var.environment == "production" ? 8080 : 80    #####
     to_port     = var.environment == "production" ? 8080 : 80
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -136,7 +136,7 @@ resource "aws_instance" "web" {
 
   tags = merge(local.common_tags, {
     Name   = format("%s-web-instance", local.name_prefix)
-    Backup = var.environment == "production" ? "Daily" : "Weekly"
+    Backup = var.environment == "production" ? "Daily" : "Weekly"   ####
   })
 
 }
