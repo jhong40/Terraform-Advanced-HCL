@@ -14,7 +14,7 @@ locals {
     ManagedBy   = var.team
     Owner       = coalesce(var.owner, var.team)      # if owner defined, return it.Otherwise, return team
   }
-  name_prefix = lower(format("%s-%s", var.team, var.environment))
+  name_prefix = lower(format("%s-%s", var.team, var.environment))  # {var.team}-{var.environment}
 }
 
 resource "aws_vpc" "main" {
@@ -22,14 +22,14 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tags = merge(local.common_tags, {
+  tags = merge(local.common_tags, {                   # Environment=dev, ManagedBy=teamA, Owner=me, name_prefix=teamA-dev-vpc
     Name = format("%s-vpc", local.name_prefix)
   })
 }
 
 resource "aws_subnet" "public_1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(var.vpc_cidr, 8, 0)
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, 0)   # ("10.0.0.0/16", 8, 0)  => 10.0.0.0/24
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = merge(local.common_tags, {
@@ -39,7 +39,7 @@ resource "aws_subnet" "public_1" {
 
 resource "aws_subnet" "public_2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(var.vpc_cidr, 8, 1)
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, 1)  # # ("10.0.0.0/16", 8, 1)  => 10.0.1.0/24
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = merge(local.common_tags, {
@@ -50,7 +50,7 @@ resource "aws_subnet" "public_2" {
 resource "aws_subnet" "public_3" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, 2)
-  availability_zone = data.aws_availability_zones.available.names[2]
+  availability_zone = data.aws_availability_zones.available.names[2]  # ("10.0.0.0/16", 8, 2)  => 10.0.2.0/24
 
   tags = merge(local.common_tags, {
     Name = format("%s-public3", local.name_prefix)
