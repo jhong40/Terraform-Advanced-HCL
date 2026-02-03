@@ -17,4 +17,14 @@ output "common_tags" {
 output "vpc_arn_components" {
   description = "Parsed components of VPC ARN using provider-defined function"
   value       = provider::aws::arn_parse(aws_vpc.main.arn)
-}
+}  
+
+#line 17 => 
+# result: 
+# {
+#   "partition": "aws",
+#   "service": "iam",
+#   "region": "",
+#   "account_id": "444455556666",
+#   "resource": "role/example",
+# }
