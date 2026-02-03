@@ -33,7 +33,7 @@ locals {
 
   buckets = ["logs", "app-data", "backups"]
 
-  bucket_prefixes = concat(local.buckets, var.additional_buckets)
+  bucket_prefixes = concat(local.buckets, var.additional_buckets)     # combine 2 list together
 }
 
 resource "aws_vpc" "main" {
