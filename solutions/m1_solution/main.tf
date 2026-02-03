@@ -12,7 +12,7 @@ locals {
   common_tags = {
     Environment = var.environment
     ManagedBy   = var.team
-    Owner       = coalesce(var.owner, var.team)
+    Owner       = coalesce(var.owner, var.team)      # if owner defined, return it.Otherwise, return team
   }
   name_prefix = lower(format("%s-%s", var.team, var.environment))
 }
