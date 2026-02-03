@@ -128,7 +128,7 @@ resource "aws_instance" "web" {
   subnet_id              = aws_subnet.public_1.id
   vpc_security_group_ids = [aws_security_group.web.id]
   monitoring             = var.environment == "production" ? true : false
-  user_data = templatefile("${path.module}/templates/user_data.tftpl", {
+  user_data = templatefile("${path.module}/templates/user_data.tftpl", {         ############  path.module in case a module
     company     = var.company
     environment = var.environment
     team        = var.team
